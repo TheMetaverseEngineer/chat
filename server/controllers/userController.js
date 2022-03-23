@@ -1,9 +1,26 @@
 const User = require("../model/userModel")
 const brcypt = require("bcrypt");
 
-module.exports.register = (req , res, net) => {
+module.exports.register = async (req , res, next) => {
 
-   const {username , email , password } = req.body;
-   const usernameCheck = await 
-
+   try {
+    const {username , email , password } = req.body;
+    const usernameCheck = await User.findOne({ username });
+    if(usernameCheck)
+    return res.json({msg:"Username already used" , status: false });
+    const emailCheck = await username.findone({email});
+    if(emailCheck)
+    return res.json({msg:"Email already used" , status: false });
+ 
+ const hashedPass = await brcypt.hash(password , 10) ;
+ const user = await User.create({
+ email,
+ username,
+ password: hashedPass,
+     });
+     delete user.password;
+     return res.json({  sstatus: true, user});
+   } catch (ex) {
+     next(ex);
+   }
 };
