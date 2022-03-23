@@ -6,7 +6,16 @@ import {ToastContainer , toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 
 function Register() {
+    const toastOptions =
+        {
+            position: "bottom-right",
+            autoClose : 10000,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "dark",
 
+        }
+    
     const [values, setValues]= useState({
 
         username : "",
@@ -25,15 +34,20 @@ function Register() {
     const handlevalidation = () => {
         const { password, confirmPassword, username, email } = values ;
         if (password !== confirmPassword ) {
-            toast.error("password is not same " , {
-                position: "bottom-right",
-                autoClose : 10000,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "dark",
+            toast.error("password is not same ",toastOptions);
+            return false;
+        } else if (username.length < 3) {
+            toast.error("Username is small , should be more than 3" ,toastOptions);
+            return false;
+        } else if (password.length < 8) {
+            toast.error("Password is small , should be more than 8" ,toastOptions);
+            return false;}
+            else if (email==="") {
+                toast.error("Email Required" ,toastOptions);
+                return false;}
 
-            });
-        }
+
+            return true;
     };
     const handleChange = (event) => {     
 
