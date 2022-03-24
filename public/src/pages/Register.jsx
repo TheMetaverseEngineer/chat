@@ -10,7 +10,7 @@ import { registerRoute } from '../utils/APIRoutes';
 
 
 function Register() {
-    const navigate = useNavigate
+    const navigate = useNavigate()
     const toastOptions =
         {
             position: "bottom-right",
@@ -35,7 +35,7 @@ function Register() {
         event.preventDefault();
         if (handlevalidation()){
 
-            const { password, confirmPassword, username, email } = values ;
+            const { password, username, email } = values ;
             const {data}= await axios.post(registerRoute, {
                 username ,
                 email ,
